@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 internal interface MoviesServiceDefinitions {
 
-    @GET("discover/movie")
-    fun discoverMovies(@Query("apiKey") apiKey: String) : Call<FavoriteResponseDTO>
+    @GET("/3/discover/movie")
+    fun discoverMovies(@Query("api_key") apiKey: String) : Call<FavoriteResponseDTO>
 
 }

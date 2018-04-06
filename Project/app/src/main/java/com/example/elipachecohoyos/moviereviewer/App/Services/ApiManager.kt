@@ -11,7 +11,6 @@ import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.MoviesAPIIn
 
 class APIManager {
 
-
     companion object {
 
         val moviesManager: MoviesAPIInterface = MoviesAPI()

@@ -11,7 +11,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  */
 class MoviesNetworkClient {
 
-    private val apiKey: String = "3d3707fe2cfcfb854662694a45fa7ef8"
+    private val apiKey: String = ""
 
     fun getFavorites(): Call<FavoriteResponseDTO> {
         return moviesServices.discoverMovies(apiKey)
@@ -24,7 +24,7 @@ class MoviesNetworkClient {
         init {
             val uri = Uri.Builder()
             uri.scheme("https")
-            uri.authority("api.themoviedb.org/3/")
+            uri.authority("api.themoviedb.org")
 
             val moviesBaseUrl = uri.build().toString()
 

@@ -9,4 +9,4 @@ import com.squareup.moshi.Json
 data class FavoriteMovieDTO(@Json(name = "id") val id: Int,
                             @Json(name = "title") val title: String,
                             @Json(name = "popularity") val popularity: String,
-                            @Json(name = "poster") val poster: String)
+                            @Json(name = "poster_path") val poster: String)
