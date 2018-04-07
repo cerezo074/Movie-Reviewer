@@ -11,7 +11,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  */
 class MoviesNetworkClient {
 
-    private val apiKey: String = ""
+    private val apiKey: String = "3d3707fe2cfcfb854662694a45fa7ef8"
 
     fun getFavorites(): Call<FavoriteResponseDTO> {
         return moviesServices.discoverMovies(apiKey)
