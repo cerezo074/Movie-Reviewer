@@ -2,8 +2,11 @@ package com.example.elipachecohoyos.moviereviewer.App.View.Home
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.widget.ProgressBar
+import android.widget.TextView
 import com.example.elipachecohoyos.moviereviewer.App.Services.APIManager
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.FavoriteResponseDTO
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.MoviesAPIInterface
@@ -14,24 +17,32 @@ import retrofit2.Response
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var loader: ProgressBar
+    private lateinit var listStatusMessage: TextView
     private lateinit var favoritesList: RecyclerView
+    private val favoriteListAdapter = FavoritesAdapter()
 
-
-    private lateinit var viewModel: MovieViewModel
+    private val viewModel: MovieViewModel = MovieViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        viewModel = MovieViewModel()
-
+        inflateViews()
         configList()
         starFavorites()
     }
 
-    private fun configList() {
+    private fun inflateViews() {
         favoritesList = findViewById(R.id.movie_list) as RecyclerView
+        loader = findViewById(R.id.movie_list_loader) as ProgressBar
+        listStatusMessage = findViewById(R.id.movie_list_status) as TextView
+    }
 
+    private fun configList() {
+        favoritesList.layoutManager = LinearLayoutManager(this)
+        favoritesList.hasFixedSize()
+        favoritesList.adapter = favoriteListAdapter
     }
 
     private fun starFavorites() {
