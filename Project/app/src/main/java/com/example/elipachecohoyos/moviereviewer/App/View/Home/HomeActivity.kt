@@ -10,8 +10,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.example.elipachecohoyos.moviereviewer.App.Services.APIManager
-import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.FavoriteMovieDTO
-import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.FavoriteResponseDTO
+import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteMovieDTO
+import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteResponseDTO
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.MoviesAPIInterface
 import com.example.elipachecohoyos.moviereviewer.R
 import retrofit2.Call
@@ -99,7 +99,7 @@ class HomeActivity : AppCompatActivity(), FavoriteListDelegate {
                 }
 
                 override fun onFailure(call: Call<FavoriteResponseDTO>?, t: Throwable?) {
-                    processError()
+                    processError(t.toString())
                 }
 
             })
@@ -122,9 +122,9 @@ class HomeActivity : AppCompatActivity(), FavoriteListDelegate {
             refreshUI()
         }
 
-        private fun processError() {
+        private fun processError(exception: String? = null) {
             listStatusMessage.text = resources.getString(R.string.error_loading_favorites)
-            Log.d("{$LOG_MOVIE_API}.error", "Error")
+            Log.d("{$LOG_MOVIE_API}.error", exception ?: "Error fetching the favorites data")
         }
 
     }

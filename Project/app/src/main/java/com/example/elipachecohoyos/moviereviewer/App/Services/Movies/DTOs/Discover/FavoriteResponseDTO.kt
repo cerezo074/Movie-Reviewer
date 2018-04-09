@@ -1,4 +1,4 @@
-package com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs
+package com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover
 
 import com.squareup.moshi.Json
 

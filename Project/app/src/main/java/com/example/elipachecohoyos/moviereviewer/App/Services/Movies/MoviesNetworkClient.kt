@@ -1,7 +1,8 @@
 package com.example.elipachecohoyos.moviereviewer.App.Services.Movies
 
 import android.net.Uri
-import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.FavoriteResponseDTO
+import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Configuration.ConfigurationResponseDTO
+import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteResponseDTO
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -15,6 +16,10 @@ class MoviesNetworkClient {
 
     fun getFavorites(): Call<FavoriteResponseDTO> {
         return moviesServices.discoverMovies(apiKey)
+    }
+
+    fun getConfiguration(): Call<ConfigurationResponseDTO> {
+        return moviesServices.fetchConfiguration(apiKey)
     }
 
     companion object {

@@ -1,4 +1,5 @@
 <resources>
+    <string name="rating">Rating</string>
     <string name="app_name">Movie Reviewer</string>
     <string name="loading_favorites">Wait a moment, we are downloading your recommendations ;)</string>
     <string name="error_loading_favorites">An error has occurred downloading your recommedations, try later</string>

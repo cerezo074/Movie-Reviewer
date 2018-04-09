@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.elipachecohoyos.moviereviewer.R
-import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.FavoriteMovieDTO
+import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteMovieDTO
 
 
 /**
@@ -55,7 +55,7 @@ class FavoritesAdapter(favoritesData: List<FavoriteMovieDTO>? = null, itemTapDel
 
         fun bind(favorite: FavoriteMovieDTO) {
             titleTextView.text = favorite.title
-            ratingTextView.text = favorite.popularity.toString()
+            ratingTextView.text = "${itemView.context.resources.getString(R.string.rating)}: ${favorite.popularity}"
         }
 
         override fun onClick(v: View?) {
