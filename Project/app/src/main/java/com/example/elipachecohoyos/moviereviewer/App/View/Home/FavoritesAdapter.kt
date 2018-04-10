@@ -6,17 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.example.elipachecohoyos.moviereviewer.App.Models.FavoriteMovie
 import com.example.elipachecohoyos.moviereviewer.R
-import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteMovieDTO
 
 
 /**
  * Created by elipachecohoyos on 6/04/18.
  */
-class FavoritesAdapter(favoritesData: List<FavoriteMovieDTO>? = null, itemTapDelegate: FavoriteListDelegate? = null): RecyclerView.Adapter<FavoritesAdapter.FavoriteMovieViewHolder>() {
+class FavoritesAdapter(favoritesData: List<FavoriteMovie>? = null, itemTapDelegate: FavoriteListDelegate? = null): RecyclerView.Adapter<FavoritesAdapter.FavoriteMovieViewHolder>() {
 
-    private var favorites: List<FavoriteMovieDTO>? = favoritesData
-    private var tapDeleage: FavoriteListDelegate? = itemTapDelegate
+    private var favorites: List<FavoriteMovie>? = favoritesData
+    private var tapDelegate: FavoriteListDelegate? = itemTapDelegate
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FavoriteMovieViewHolder {
         val viewHolder = LayoutInflater.from(parent?.context).inflate(R.layout.home_favorite_item, parent, false)
@@ -31,10 +32,10 @@ class FavoritesAdapter(favoritesData: List<FavoriteMovieDTO>? = null, itemTapDel
         val favorites = favorites ?: return
         val favoriteMovie = favorites[position]
         holder?.bind(favoriteMovie)
-        holder?.delegate = tapDeleage
+        holder?.delegate = tapDelegate
     }
 
-    fun update(data: List<FavoriteMovieDTO>?) {
+    fun update(data: List<FavoriteMovie>?) {
         favorites = data
         notifyDataSetChanged()
     }
@@ -53,9 +54,14 @@ class FavoritesAdapter(favoritesData: List<FavoriteMovieDTO>? = null, itemTapDel
             itemView.setOnClickListener(this)
         }
 
-        fun bind(favorite: FavoriteMovieDTO) {
+        fun bind(favorite: FavoriteMovie) {
             titleTextView.text = favorite.title
-            ratingTextView.text = "${itemView.context.resources.getString(R.string.rating)}: ${favorite.popularity}"
+            ratingTextView.text = favorite.rating
+            Glide.with(itemView.context)
+                    .load(favorite.smallPoster)
+                    .placeholder(R.drawable.placeholder_movie)
+                    .error(R.drawable.error_image_download)
+                    .into(poster)
         }
 
         override fun onClick(v: View?) {

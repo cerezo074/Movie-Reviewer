@@ -5,5 +5,6 @@ import com.squareup.moshi.Json
 /**
  * Created by elipachecohoyos on 9/04/18.
  */
+
 data class ImageConfigurationDTO (@Json(name = "base_url") val baseURL: String,
-                                  @Json(name = "poster_sizes") val posterSize: List<String>)
+                                  @Json(name = "poster_sizes") val rawPosterSizes: List<String>)

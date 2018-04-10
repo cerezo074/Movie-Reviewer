@@ -1,6 +1,8 @@
 package com.example.elipachecohoyos.moviereviewer.App.Services.Movies
 
+import android.net.Uri
 import android.util.Log
+import com.example.elipachecohoyos.moviereviewer.App.Models.PosterSize
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Configuration.ConfigurationResponseDTO
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteResponseDTO
 import retrofit2.Call
@@ -13,24 +15,26 @@ import retrofit2.Response
 
 internal class MoviesAPI: MoviesAPIInterface {
 
+    override val baseURL: String
+        get() = moviesConfiguration?.images?.baseURL ?: ""
+
+    override val rawPosterSizes: List<String>
+        get() = moviesConfiguration?.images?.rawPosterSizes ?: listOf()
+
     private val networkApi = MoviesNetworkClient()
     private var moviesConfiguration: ConfigurationResponseDTO? = null
-
     private val LOG_MOVIE_API = "com.movie.api"
 
     init {
-        fectchConfiguration()
+        fetchConfiguration()
     }
 
     override fun getFavorites(): Call<FavoriteResponseDTO> {
         return networkApi.getFavorites()
     }
 
-    override fun createImageURI(path: String) : String {
-        return ""
-    }
-
-    private fun fectchConfiguration() {
+    //TODO: Should update or notify to the classes that retain this class to reload their UI(e.g. images are ready to download)
+    private fun fetchConfiguration() {
         val call = networkApi.getConfiguration()
         call.enqueue(object : Callback<ConfigurationResponseDTO> {
 

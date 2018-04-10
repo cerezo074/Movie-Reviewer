@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import com.example.elipachecohoyos.moviereviewer.App.Models.FavoriteMovie
 import com.example.elipachecohoyos.moviereviewer.App.Services.APIManager
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteMovieDTO
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteResponseDTO
@@ -78,9 +79,18 @@ class HomeActivity : AppCompatActivity(), FavoriteListDelegate {
 
         private val LOG_MOVIE_API = "com.api.movie"
         private val moviesManager: MoviesAPIInterface
+        private var favoriteMoviesDTO: List<FavoriteMovieDTO>? = null
 
-        var favoriteMovies: List<FavoriteMovieDTO>? = null
+        var favoriteMovies: List<FavoriteMovie>? = null
+            get() {
+                val list = favoriteMoviesDTO?.map { FavoriteMovie(it, moviesManager.rawPosterSizes, moviesManager.baseURL) }
+                val ratingTitle = resources.getString(R.string.rating)
+                list?.forEach { it.updateRating(ratingTitle) }
+
+                return list
+            }
             private set
+
 
         init {
             moviesManager = movieAPIManager ?: APIManager.moviesManager
@@ -113,7 +123,8 @@ class HomeActivity : AppCompatActivity(), FavoriteListDelegate {
 
             val favoriteMovies = response as? List<FavoriteMovieDTO>
             val sortedFavoritesMovies = favoriteMovies?.sortedByDescending { it.popularity }
-            this.favoriteMovies = sortedFavoritesMovies
+            favoriteMoviesDTO = sortedFavoritesMovies
+
             didRefreshData()
             Log.d("{$LOG_MOVIE_API}.response",favoriteMovies.toString())
         }
