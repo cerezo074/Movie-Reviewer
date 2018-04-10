@@ -44,6 +44,7 @@ class FavoriteMovie(private val movieDTO: FavoriteMovieDTO, private val rawPoste
     var rating: String = movieDTO.popularity.toString()
     private  set
 
+    val identifier: Int = movieDTO.id
     val title: String = movieDTO.title
     val smallPoster: String
     val largePoster: String
@@ -51,6 +52,7 @@ class FavoriteMovie(private val movieDTO: FavoriteMovieDTO, private val rawPoste
 
     init {
         val posterSizes = rawPosterSizes.map { PosterSize.createPosterSize(it) }
+
         val smallPosterSize = posterSizes.find { it is PosterSize.Small }
         smallPoster = if (smallPosterSize != null) { Uri.parse(baseURL + smallPosterSize.value + "/" + movieDTO.poster).toString() } else { " " }
 

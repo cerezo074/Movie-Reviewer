@@ -1,5 +1,6 @@
 package com.example.elipachecohoyos.moviereviewer.App.View.Home
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -8,12 +9,13 @@ import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import com.example.elipachecohoyos.moviereviewer.App.Models.FavoriteMovie
+import com.example.elipachecohoyos.moviereviewer.App.Models.Movie
 import com.example.elipachecohoyos.moviereviewer.App.Services.APIManager
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteMovieDTO
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.DTOs.Discover.FavoriteResponseDTO
 import com.example.elipachecohoyos.moviereviewer.App.Services.Movies.MoviesAPIInterface
+import com.example.elipachecohoyos.moviereviewer.App.View.MovieDetail.MovieDetailActivity
 import com.example.elipachecohoyos.moviereviewer.R
 import retrofit2.Call
 import retrofit2.Callback
@@ -70,8 +72,16 @@ class HomeActivity : AppCompatActivity(), FavoriteListDelegate {
     }
 
     override fun didTouchItem(index: Int) {
-        val item = viewModel.favoriteMovies?.get(index) ?: return
-        Toast.makeText(this, "Item ${item.title} touched", Toast.LENGTH_SHORT).show()
+        val movie = viewModel.getBasicMovieData(index) ?: return
+        val movieDetailIntent = Intent(this, MovieDetailActivity::class.java)
+        movieDetailIntent.putExtra(FAVORITE_MOVIE_KEY, movie)
+
+        startActivity(movieDetailIntent)
+    }
+
+    companion object {
+        @JvmStatic
+        val FAVORITE_MOVIE_KEY = "com.activity.home.favorite_movie"
     }
 
     //TODO: Move this class to its folder and use streams or observables to make the asynchoronous comunications
@@ -113,6 +123,12 @@ class HomeActivity : AppCompatActivity(), FavoriteListDelegate {
                 }
 
             })
+        }
+
+        fun getBasicMovieData(index: Int) : Movie? {
+            val favoriteMovie = favoriteMovies?.get(index) ?: return null
+
+            return Movie(favoriteMovie.identifier, favoriteMovie.title, favoriteMovie.rating, favoriteMovie.largePoster)
         }
 
         private fun processResponse(response: Any?) {
